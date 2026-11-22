@@ -1,0 +1,826 @@
+{
+  "app_info": {
+    "type": "appInfos",
+    "api": "v1",
+    "fields": [
+      "appStoreState",
+      "state",
+      "appStoreAgeRating",
+      "australiaAgeRating",
+      "brazilAgeRating",
+      "brazilAgeRatingV2",
+      "franceAgeRating",
+      "koreaAgeRating"
+    ],
+    "create": null,
+    "update": null,
+    "parent": "app",
+    "relation": "app",
+    "collection": "appInfos",
+    "root": false
+  },
+  "app_info_localization": {
+    "type": "appInfoLocalizations",
+    "api": "v1",
+    "fields": [
+      "locale",
+      "name",
+      "subtitle",
+      "privacyPolicyUrl",
+      "privacyChoicesUrl",
+      "privacyPolicyText"
+    ],
+    "create": {
+      "required": [
+        "name",
+        "locale"
+      ],
+      "fields": {
+        "locale": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "subtitle": {
+          "type": "string",
+          "nullable": true
+        },
+        "privacyPolicyUrl": {
+          "type": "string",
+          "nullable": true
+        },
+        "privacyChoicesUrl": {
+          "type": "string",
+          "nullable": true
+        },
+        "privacyPolicyText": {
+          "type": "string",
+          "nullable": true
+        }
+      }
+    },
+    "update": {
+      "required": [],
+      "fields": {
+        "name": {
+          "type": "string",
+          "nullable": true
+        },
+        "subtitle": {
+          "type": "string",
+          "nullable": true
+        },
+        "privacyPolicyUrl": {
+          "type": "string",
+          "nullable": true
+        },
+        "privacyChoicesUrl": {
+          "type": "string",
+          "nullable": true
+        },
+        "privacyPolicyText": {
+          "type": "string",
+          "nullable": true
+        }
+      }
+    },
+    "parent": "app_info",
+    "relation": "appInfo",
+    "collection": "appInfoLocalizations",
+    "root": false
+  },
+  "version_localization": {
+    "type": "appStoreVersionLocalizations",
+    "api": "v1",
+    "fields": [
+      "description",
+      "locale",
+      "keywords",
+      "marketingUrl",
+      "promotionalText",
+      "supportUrl",
+      "whatsNew"
+    ],
+    "create": {
+      "required": [
+        "locale"
+      ],
+      "fields": {
+        "description": {
+          "type": "string",
+          "nullable": true
+        },
+        "locale": {
+          "type": "string"
+        },
+        "keywords": {
+          "type": "string",
+          "nullable": true
+        },
+        "marketingUrl": {
+          "type": "string",
+          "nullable": true,
+          "format": "uri"
+        },
+        "promotionalText": {
+          "type": "string",
+          "nullable": true
+        },
+        "supportUrl": {
+          "type": "string",
+          "nullable": true,
+          "format": "uri"
+        },
+        "whatsNew": {
+          "type": "string",
+          "nullable": true
+        }
+      }
+    },
+    "update": {
+      "required": [],
+      "fields": {
+        "description": {
+          "type": "string",
+          "nullable": true
+        },
+        "keywords": {
+          "type": "string",
+          "nullable": true
+        },
+        "marketingUrl": {
+          "type": "string",
+          "nullable": true,
+          "format": "uri"
+        },
+        "promotionalText": {
+          "type": "string",
+          "nullable": true
+        },
+        "supportUrl": {
+          "type": "string",
+          "nullable": true,
+          "format": "uri"
+        },
+        "whatsNew": {
+          "type": "string",
+          "nullable": true
+        }
+      }
+    },
+    "parent": "version",
+    "relation": "appStoreVersion",
+    "collection": "appStoreVersionLocalizations",
+    "root": false
+  },
+  "gc_achievement": {
+    "type": "gameCenterAchievements",
+    "api": "v2",
+    "fields": [
+      "referenceName",
+      "vendorIdentifier",
+      "points",
+      "showBeforeEarned",
+      "repeatable",
+      "archived"
+    ],
+    "create": {
+      "required": [
+        "vendorIdentifier",
+        "repeatable",
+        "showBeforeEarned",
+        "referenceName",
+        "points"
+      ],
+      "fields": {
+        "referenceName": {
+          "type": "string"
+        },
+        "vendorIdentifier": {
+          "type": "string"
+        },
+        "points": {
+          "type": "integer"
+        },
+        "showBeforeEarned": {
+          "type": "boolean"
+        },
+        "repeatable": {
+          "type": "boolean"
+        },
+        "activityProperties": {
+          "type": "object",
+          "nullable": true,
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "update": {
+      "required": [],
+      "fields": {
+        "referenceName": {
+          "type": "string",
+          "nullable": true
+        },
+        "points": {
+          "type": "integer",
+          "nullable": true
+        },
+        "showBeforeEarned": {
+          "type": "boolean",
+          "nullable": true
+        },
+        "repeatable": {
+          "type": "boolean",
+          "nullable": true
+        },
+        "archived": {
+          "type": "boolean",
+          "nullable": true
+        },
+        "activityProperties": {
+          "type": "object",
+          "nullable": true,
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "parent": "gc_detail",
+    "relation": "gameCenterDetail",
+    "collection": "gameCenterAchievementsV2",
+    "root": true
+  },
+  "gc_achievement_version": {
+    "type": "gameCenterAchievementVersions",
+    "api": "v2",
+    "fields": [
+      "version",
+      "state"
+    ],
+    "create": {
+      "required": [],
+      "fields": {}
+    },
+    "update": null,
+    "parent": "gc_achievement",
+    "relation": "achievement",
+    "collection": "versions",
+    "root": false
+  },
+  "gc_achievement_localization": {
+    "type": "gameCenterAchievementLocalizations",
+    "api": "v2",
+    "fields": [
+      "locale",
+      "name",
+      "beforeEarnedDescription",
+      "afterEarnedDescription"
+    ],
+    "create": {
+      "required": [
+        "name",
+        "beforeEarnedDescription",
+        "locale",
+        "afterEarnedDescription"
+      ],
+      "fields": {
+        "locale": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "beforeEarnedDescription": {
+          "type": "string"
+        },
+        "afterEarnedDescription": {
+          "type": "string"
+        }
+      }
+    },
+    "update": {
+      "required": [],
+      "fields": {
+        "name": {
+          "type": "string",
+          "nullable": true
+        },
+        "beforeEarnedDescription": {
+          "type": "string",
+          "nullable": true
+        },
+        "afterEarnedDescription": {
+          "type": "string",
+          "nullable": true
+        }
+      }
+    },
+    "parent": "gc_achievement_version",
+    "relation": "version",
+    "collection": "localizations",
+    "root": false
+  },
+  "gc_achievement_image": {
+    "type": "gameCenterAchievementImages",
+    "api": "v2",
+    "fields": [
+      "fileSize",
+      "fileName",
+      "assetDeliveryState"
+    ],
+    "create": null,
+    "update": null,
+    "parent": "gc_achievement_localization",
+    "relation": "localization",
+    "collection": "image",
+    "root": false
+  },
+  "gc_leaderboard": {
+    "type": "gameCenterLeaderboards",
+    "api": "v2",
+    "fields": [
+      "defaultFormatter",
+      "referenceName",
+      "vendorIdentifier",
+      "submissionType",
+      "scoreSortType",
+      "scoreRangeStart",
+      "scoreRangeEnd",
+      "recurrenceStartDate",
+      "recurrenceDuration",
+      "recurrenceRule",
+      "archived",
+      "visibility"
+    ],
+    "create": {
+      "required": [
+        "vendorIdentifier",
+        "submissionType",
+        "defaultFormatter",
+        "scoreSortType",
+        "referenceName"
+      ],
+      "fields": {
+        "defaultFormatter": {
+          "type": "string",
+          "enum": [
+            "INTEGER",
+            "DECIMAL_POINT_1_PLACE",
+            "DECIMAL_POINT_2_PLACE",
+            "DECIMAL_POINT_3_PLACE",
+            "ELAPSED_TIME_CENTISECOND",
+            "ELAPSED_TIME_MINUTE",
+            "ELAPSED_TIME_SECOND",
+            "MONEY_POUND_DECIMAL",
+            "MONEY_POUND",
+            "MONEY_DOLLAR_DECIMAL",
+            "MONEY_DOLLAR",
+            "MONEY_EURO_DECIMAL",
+            "MONEY_EURO",
+            "MONEY_FRANC_DECIMAL",
+            "MONEY_FRANC",
+            "MONEY_KRONER_DECIMAL",
+            "MONEY_KRONER",
+            "MONEY_YEN"
+          ]
+        },
+        "referenceName": {
+          "type": "string"
+        },
+        "vendorIdentifier": {
+          "type": "string"
+        },
+        "submissionType": {
+          "type": "string",
+          "enum": [
+            "BEST_SCORE",
+            "MOST_RECENT_SCORE"
+          ]
+        },
+        "scoreSortType": {
+          "type": "string",
+          "enum": [
+            "ASC",
+            "DESC"
+          ]
+        },
+        "scoreRangeStart": {
+          "type": "string",
+          "nullable": true,
+          "format": "number"
+        },
+        "scoreRangeEnd": {
+          "type": "string",
+          "nullable": true,
+          "format": "number"
+        },
+        "recurrenceStartDate": {
+          "type": "string",
+          "nullable": true,
+          "format": "date-time"
+        },
+        "recurrenceDuration": {
+          "type": "string",
+          "nullable": true,
+          "format": "duration"
+        },
+        "recurrenceRule": {
+          "type": "string",
+          "nullable": true
+        },
+        "activityProperties": {
+          "type": "object",
+          "nullable": true,
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "visibility": {
+          "type": "string",
+          "enum": [
+            "SHOW_FOR_ALL",
+            "HIDE_FOR_ALL"
+          ],
+          "nullable": true
+        }
+      }
+    },
+    "update": {
+      "required": [],
+      "fields": {
+        "defaultFormatter": {
+          "type": "string",
+          "enum": [
+            "INTEGER",
+            "DECIMAL_POINT_1_PLACE",
+            "DECIMAL_POINT_2_PLACE",
+            "DECIMAL_POINT_3_PLACE",
+            "ELAPSED_TIME_CENTISECOND",
+            "ELAPSED_TIME_MINUTE",
+            "ELAPSED_TIME_SECOND",
+            "MONEY_POUND_DECIMAL",
+            "MONEY_POUND",
+            "MONEY_DOLLAR_DECIMAL",
+            "MONEY_DOLLAR",
+            "MONEY_EURO_DECIMAL",
+            "MONEY_EURO",
+            "MONEY_FRANC_DECIMAL",
+            "MONEY_FRANC",
+            "MONEY_KRONER_DECIMAL",
+            "MONEY_KRONER",
+            "MONEY_YEN"
+          ],
+          "nullable": true
+        },
+        "referenceName": {
+          "type": "string",
+          "nullable": true
+        },
+        "submissionType": {
+          "type": "string",
+          "enum": [
+            "BEST_SCORE",
+            "MOST_RECENT_SCORE"
+          ],
+          "nullable": true
+        },
+        "scoreSortType": {
+          "type": "string",
+          "enum": [
+            "ASC",
+            "DESC"
+          ],
+          "nullable": true
+        },
+        "scoreRangeStart": {
+          "type": "string",
+          "nullable": true,
+          "format": "number"
+        },
+        "scoreRangeEnd": {
+          "type": "string",
+          "nullable": true,
+          "format": "number"
+        },
+        "recurrenceStartDate": {
+          "type": "string",
+          "nullable": true,
+          "format": "date-time"
+        },
+        "recurrenceDuration": {
+          "type": "string",
+          "nullable": true,
+          "format": "duration"
+        },
+        "recurrenceRule": {
+          "type": "string",
+          "nullable": true
+        },
+        "archived": {
+          "type": "boolean",
+          "nullable": true
+        },
+        "activityProperties": {
+          "type": "object",
+          "nullable": true,
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "visibility": {
+          "type": "string",
+          "enum": [
+            "SHOW_FOR_ALL",
+            "HIDE_FOR_ALL"
+          ],
+          "nullable": true
+        }
+      }
+    },
+    "parent": "gc_detail",
+    "relation": "gameCenterDetail",
+    "collection": "gameCenterLeaderboardsV2",
+    "root": true
+  },
+  "gc_leaderboard_version": {
+    "type": "gameCenterLeaderboardVersions",
+    "api": "v2",
+    "fields": [
+      "version",
+      "state"
+    ],
+    "create": {
+      "required": [],
+      "fields": {}
+    },
+    "update": null,
+    "parent": "gc_leaderboard",
+    "relation": "leaderboard",
+    "collection": "versions",
+    "root": false
+  },
+  "gc_leaderboard_localization": {
+    "type": "gameCenterLeaderboardLocalizations",
+    "api": "v2",
+    "fields": [
+      "locale",
+      "name",
+      "formatterOverride",
+      "formatterSuffix",
+      "formatterSuffixSingular",
+      "description"
+    ],
+    "create": {
+      "required": [
+        "name",
+        "locale"
+      ],
+      "fields": {
+        "locale": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "formatterOverride": {
+          "type": "string",
+          "enum": [
+            "INTEGER",
+            "DECIMAL_POINT_1_PLACE",
+            "DECIMAL_POINT_2_PLACE",
+            "DECIMAL_POINT_3_PLACE",
+            "ELAPSED_TIME_CENTISECOND",
+            "ELAPSED_TIME_MINUTE",
+            "ELAPSED_TIME_SECOND",
+            "MONEY_POUND_DECIMAL",
+            "MONEY_POUND",
+            "MONEY_DOLLAR_DECIMAL",
+            "MONEY_DOLLAR",
+            "MONEY_EURO_DECIMAL",
+            "MONEY_EURO",
+            "MONEY_FRANC_DECIMAL",
+            "MONEY_FRANC",
+            "MONEY_KRONER_DECIMAL",
+            "MONEY_KRONER",
+            "MONEY_YEN"
+          ],
+          "nullable": true
+        },
+        "formatterSuffix": {
+          "type": "string",
+          "nullable": true
+        },
+        "formatterSuffixSingular": {
+          "type": "string",
+          "nullable": true
+        },
+        "description": {
+          "type": "string",
+          "nullable": true
+        }
+      }
+    },
+    "update": {
+      "required": [],
+      "fields": {
+        "name": {
+          "type": "string",
+          "nullable": true
+        },
+        "formatterOverride": {
+          "type": "string",
+          "enum": [
+            "INTEGER",
+            "DECIMAL_POINT_1_PLACE",
+            "DECIMAL_POINT_2_PLACE",
+            "DECIMAL_POINT_3_PLACE",
+            "ELAPSED_TIME_CENTISECOND",
+            "ELAPSED_TIME_MINUTE",
+            "ELAPSED_TIME_SECOND",
+            "MONEY_POUND_DECIMAL",
+            "MONEY_POUND",
+            "MONEY_DOLLAR_DECIMAL",
+            "MONEY_DOLLAR",
+            "MONEY_EURO_DECIMAL",
+            "MONEY_EURO",
+            "MONEY_FRANC_DECIMAL",
+            "MONEY_FRANC",
+            "MONEY_KRONER_DECIMAL",
+            "MONEY_KRONER",
+            "MONEY_YEN"
+          ],
+          "nullable": true
+        },
+        "formatterSuffix": {
+          "type": "string",
+          "nullable": true
+        },
+        "formatterSuffixSingular": {
+          "type": "string",
+          "nullable": true
+        },
+        "description": {
+          "type": "string",
+          "nullable": true
+        }
+      }
+    },
+    "parent": "gc_leaderboard_version",
+    "relation": "version",
+    "collection": "localizations",
+    "root": false
+  },
+  "gc_leaderboard_image": {
+    "type": "gameCenterLeaderboardImages",
+    "api": "v2",
+    "fields": [
+      "fileSize",
+      "fileName",
+      "assetDeliveryState"
+    ],
+    "create": null,
+    "update": null,
+    "parent": "gc_leaderboard_localization",
+    "relation": "localization",
+    "collection": "image",
+    "root": false
+  },
+  "gc_challenge": {
+    "type": "gameCenterChallenges",
+    "api": "v1",
+    "fields": [
+      "referenceName",
+      "vendorIdentifier",
+      "archived",
+      "challengeType",
+      "repeatable"
+    ],
+    "create": {
+      "required": [
+        "vendorIdentifier",
+        "challengeType",
+        "referenceName"
+      ],
+      "fields": {
+        "referenceName": {
+          "type": "string"
+        },
+        "vendorIdentifier": {
+          "type": "string"
+        },
+        "challengeType": {
+          "type": "string",
+          "enum": [
+            "LEADERBOARD"
+          ]
+        },
+        "repeatable": {
+          "type": "boolean",
+          "nullable": true
+        }
+      }
+    },
+    "update": {
+      "required": [],
+      "fields": {
+        "referenceName": {
+          "type": "string",
+          "nullable": true
+        },
+        "archived": {
+          "type": "boolean",
+          "nullable": true
+        },
+        "repeatable": {
+          "type": "boolean",
+          "nullable": true
+        }
+      }
+    },
+    "parent": "gc_detail",
+    "relation": "gameCenterDetail",
+    "collection": "gameCenterChallenges",
+    "root": true
+  },
+  "gc_challenge_version": {
+    "type": "gameCenterChallengeVersions",
+    "api": "v1",
+    "fields": [
+      "version",
+      "state"
+    ],
+    "create": {
+      "required": [],
+      "fields": {}
+    },
+    "update": null,
+    "parent": "gc_challenge",
+    "relation": "challenge",
+    "collection": "versions",
+    "root": false
+  },
+  "gc_challenge_localization": {
+    "type": "gameCenterChallengeLocalizations",
+    "api": "v1",
+    "fields": [
+      "locale",
+      "name",
+      "description"
+    ],
+    "create": {
+      "required": [
+        "name",
+        "locale"
+      ],
+      "fields": {
+        "locale": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string",
+          "nullable": true
+        }
+      }
+    },
+    "update": {
+      "required": [],
+      "fields": {
+        "name": {
+          "type": "string",
+          "nullable": true
+        },
+        "description": {
+          "type": "string",
+          "nullable": true
+        }
+      }
+    },
+    "parent": "gc_challenge_version",
+    "relation": "version",
+    "collection": "localizations",
+    "root": false
+  },
+  "gc_challenge_image": {
+    "type": "gameCenterChallengeImages",
+    "api": "v1",
+    "fields": [
+      "fileSize",
+      "fileName",
+      "assetDeliveryState"
+    ],
+    "create": null,
+    "update": null,
+    "parent": "gc_challenge_localization",
+    "relation": "localization",
+    "collection": "image",
+    "root": false
+  }
+}

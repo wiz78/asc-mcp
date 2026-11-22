@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>local.asc-scoped</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Library/Application Support/ASCScoped/private/activate-socket</string>
+        <string>/bin/sh</string>
+        <string>/Library/Application Support/ASCScoped/private/run-asc-daemon.sh</string>
+    </array>
+    <key>UserName</key>
+    <string>ascdaemon</string>
+    <key>GroupName</key>
+    <string>ascclients</string>
+    <key>Sockets</key>
+    <dict>
+        <key>ASCListener</key>
+        <dict>
+            <key>SockPathName</key>
+            <string>/Library/Application Support/ASCScoped/run/asc.sock</string>
+            <key>SockPathGroup</key>
+            <integer>0</integer>
+            <key>SockPathMode</key>
+            <integer>432</integer>
+        </dict>
+    </dict>
+    <key>ThrottleInterval</key>
+    <integer>30</integer>
+</dict>
+</plist>

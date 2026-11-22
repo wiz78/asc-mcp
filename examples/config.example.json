@@ -1,0 +1,14 @@
+{
+  "idleTimeoutMs": 120000,
+  "apps": {
+    "example-app": { "id": "1234567890", "policy": "app-audit" }
+  },
+  "team": { "enabled": false, "policy": "team-audit" },
+  "policies": {
+    "app-audit": { "allow": ["read:app-management"] },
+    "app-editor": { "allow": ["app-management"], "deny": ["pricing"] },
+    "availability-only": { "allow": ["pricing availability"] },
+    "pricing-audit": { "allow": ["read:pricing"] },
+    "team-audit": { "allow": ["read:*"] }
+  }
+}

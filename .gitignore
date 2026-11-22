@@ -1,0 +1,57 @@
+# Dependencies and generated output
+node_modules/
+coverage/
+.nyc_output/
+.build/
+dist/
+*.log
+.DS_Store
+
+# Local agent/project settings and personal deployment configuration
+.codex/
+.claude/
+.claude.json
+.mcp.json
+CLAUDE.local.md
+.agents/
+.asc/
+.env
+.env.*
+!.env.example
+config.local.*
+*.local.json
+*.local.yaml
+*.local.yml
+launchd/apps.json
+
+# Credentials and local service state
+*.p8
+*.pem
+*.key
+op-token
+environment-id
+*.sock
+.backup*/
+.update*/
+
+# Original local wrapper and internal session notes
+asc-scoped-mcp.mjs
+docs/superpowers/
+
+# Private design notes
+docs/*design*.md
+docs/design/
+
+# Other local credentials and editor preferences
+.npmrc
+.netrc
+.op/
+.vscode/
+.idea/
+/config.json
+/apps.json
+/secrets/
+*.p12
+*.pfx
+*.mobileprovision
+*.local.toml

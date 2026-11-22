@@ -1,0 +1,48 @@
+{
+  "name": "asc-mcp",
+  "version": "0.1.0-preview.1",
+  "description": "Apple Silicon macOS App Store Connect MCP daemon with isolated credentials and server-enforced operation policies",
+  "scripts": {
+    "test": "node scripts/test.mjs",
+    "test:macos": "node --import ./tests/no-network.mjs --test launchd/lifecycle.test.mjs",
+    "test:codex": "node --import ./tests/no-network.mjs --test asc-codex.test.mjs",
+    "check": "node scripts/check.mjs"
+  },
+  "keywords": [
+    "mcp",
+    "app-store-connect",
+    "macos"
+  ],
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "zod": "^4.6.7"
+  },
+  "private": true,
+  "engines": {
+    "node": ">=24"
+  },
+  "bin": {
+    "asc-mcp-preview": "./asc-preview.mjs",
+    "asc-mcp-bridge": "./asc-bridge.mjs"
+  },
+  "files": [
+    "asc-*.mjs",
+    "!*.test.mjs",
+    "!asc-fixture.mjs",
+    "!asc-scoped-mcp.mjs",
+    "asc-resource-catalog.json",
+    "catalog/",
+    "launchd/",
+    "!launchd/apps.json",
+    "!launchd/*.test.mjs",
+    "examples/",
+    "docs/policy.md",
+    "docs/security.md",
+    "docs/coverage.md",
+    "README.md",
+    "LICENSE",
+    "SECURITY.md"
+  ]
+}
