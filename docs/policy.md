@@ -59,6 +59,18 @@ references are checked. Unknown parent models fail closed. App-owned root
 collections need a verified parent endpoint or documented app filter.
 Included response resources never establish ownership.
 
+Nomination tools (`api_nominations_*`) support app scope with the `nominations`
+selector. Collection requests inject `filter[relatedApps]` for the selected app;
+Apple also requires `filter[state]`. Each returned nomination is verified using
+its canonical `relatedApps` relationship, independently of sparse response
+fields. An app-scoped request fails if a nomination has missing, incomplete,
+empty, or foreign app linkage, including nominations shared across apps.
+Shared nominations require explicit team scope. Creation and relationship
+updates must name only the selected app, and referenced in-app events must
+belong to it. Existing nomination ownership is fetched again before each
+read, update, or deletion; these checks are not cached. Listing adds one
+ownership request per nomination. Included resources are stripped as usual.
+
 idleTimeoutMs defaults to 120000 and accepts 100 through 3600000. Ownership
 caches last up to ten minutes of a daemon run. Grouped Game Center mutations
 recheck membership and require all affected apps to be allowed.

@@ -54,7 +54,24 @@ export function appOperationAvailable(operation) {
     return operation.method === "GET" || operation.path.includes("/{id}");
   }
   return references.has(operation.resourceType) || legacyKinds.has(operation.resourceType) ||
-    Object.hasOwn(parents, operation.resourceType) || operation.resourceType === "gameCenterDetails";
+    Object.hasOwn(parents, operation.resourceType) || operation.resourceType === "gameCenterDetails" ||
+    operation.resourceType === "nominations";
+}
+
+function verifyNominationApps(app, relationship) {
+  const data = relationship?.data;
+  const paging = relationship?.meta?.paging;
+  if (!Array.isArray(data) || !data.length || relationship.links?.next ||
+      paging?.nextCursor || (paging?.total !== undefined && paging.total !== data.length) ||
+      (data.length >= Math.min(50, paging?.limit ?? 50) && paging?.total === undefined)) {
+    throw new PublicError("Could not establish complete nomination ownership.");
+  }
+  for (const parent of data) {
+    if (parent?.type !== "apps" || !resourceId.safeParse(parent.id).success) {
+      throw new PublicError("Could not establish nomination ownership.");
+    }
+    if (parent.id !== app) throw new PublicError("Nomination belongs to a different app or is shared across apps. Use team scope.");
+  }
 }
 
 function cleanResponse(value) {
@@ -95,6 +112,15 @@ export function createApiOperations(apps, request, { now = Date.now, authorizeSh
       return;
     }
     if (references.has(type)) return;
+    if (type === "nominations") {
+      // Nominations have a to-many parent. Never cache this check: a shared
+      // nomination must not become mutable through stale ownership evidence.
+      const resource = (await request("/v1/nominations/" + encodeURIComponent(id) +
+        "?include=relatedApps&fields%5Bnominations%5D=relatedApps&limit%5BrelatedApps%5D=50"))?.data;
+      if (resource?.type !== type || resource.id !== id) throw new PublicError("Unexpected ownership response.");
+      verifyNominationApps(app, resource.relationships?.relatedApps);
+      return;
+    }
     const kind = legacyKinds.get(type);
     if (kind?.startsWith("gc_") || type === "gameCenterDetails") {
       await expanded.verifyResource(app, kind || "gc_detail", id, mutation);
@@ -157,7 +183,18 @@ export function createApiOperations(apps, request, { now = Date.now, authorizeSh
     const type = operation.resourceType;
     const id = input.path?.id;
     const mutation = operation.method !== "GET";
-    if (id) await own(app, type, id, mutation);
+    if (type === "nominations") {
+      if (id) await own(app, type, id, mutation);
+      else if (operation.method === "GET") {
+        const supplied = input.query?.["filter[relatedApps]"];
+        if (supplied && JSON.stringify(supplied) !== JSON.stringify([app])) throw new PublicError("App filter must match the selected app.");
+        input.query = { ...input.query, "filter[relatedApps]": [app] };
+      }
+      const record = input.body?.data;
+      if (record && (!id || Object.hasOwn(record.relationships || {}, "relatedApps"))) {
+        verifyNominationApps(app, record.relationships?.relatedApps);
+      }
+    } else if (id) await own(app, type, id, mutation);
     else if (type === "apps" && operation.method === "GET") {
       const supplied = input.query?.["filter[id]"];
       if (supplied && JSON.stringify(supplied) !== JSON.stringify([app])) throw new PublicError("App filter must match the selected app.");
@@ -222,6 +259,18 @@ export function createApiOperations(apps, request, { now = Date.now, authorizeSh
     if (operation.method !== "GET") cache.clear();
     const result = cleanResponse(response ?? { completed: true });
     if (scope.type === "app") {
+      if (operation.resourceType === "nominations" && operation.method === "GET") {
+        const records = input.path?.id ? [result?.data] : result?.data;
+        if (!Array.isArray(records)) throw new PublicError("Unexpected nomination response.");
+        for (const record of records) {
+          if (record?.type !== "nominations" || !resourceId.safeParse(record.id).success ||
+              (input.path?.id && record.id !== input.path.id)) throw new PublicError("Unexpected nomination response.");
+          if (record.relationships?.relatedApps) verifyNominationApps(scope.id, record.relationships.relatedApps);
+          // Collection filters establish membership, not exclusive ownership.
+          // Fetch canonical linkage independently of caller-selected fields.
+          if (!input.path?.id) await own(scope.id, "nominations", record.id);
+        }
+      }
       // Included resources can cross a shared relationship. They never
       // establish ownership or become app-scoped output.
       if (result && typeof result === "object") delete result.included;
